@@ -186,6 +186,14 @@ private fun SchemaValidationScope.validateNoIntrospectionNames() {
   }
 }
 
+/**
+ * Computes the keyFields for the given [typeDefinition] and checks their validity:
+ * - a type cannot define key fields if it has an interface with key fields already
+ * - a type cannot inherit two interfaces with different
+ *
+ * This method is recursive and will cache the key fields of implemented interfaces in
+ * [keyFieldsCache]
+ */
 private fun SchemaValidationScope.keyFields(
     typeDefinition: GQLTypeDefinition,
     allTypeDefinition: Map<String, GQLTypeDefinition>,
